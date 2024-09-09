@@ -1,0 +1,57 @@
+/*
+   PROJETO: Irrigador Inteligente
+   DISCIPLINA: Software em Tempo Real
+   UNIVERSIDADE: Universidade Federal do Ceará (UFC), Campus Sobral
+   CURSO: Engenharia da Computação
+   DATA: 09/2024
+*/
+
+// Variáveis para leitura do sensor
+bool leituraSensor;
+bool leituraAnterior;
+
+void setup() {
+  
+  // Configurações dos pinos
+  pinMode(8, INPUT);     // Sensor de umidade do solo
+  pinMode(12, OUTPUT);   // Módulo de relé para controlar a bomba
+  
+  // LEDs indicadores
+  pinMode(5, OUTPUT);  // LED vermelho (solo seco)
+  pinMode(6, OUTPUT);  // LED amarelo (bomba ligada)
+  pinMode(7, OUTPUT);  // LED verde (solo úmido)
+}
+
+void loop() {
+
+  // Leitura do sensor de umidade
+  leituraSensor = digitalRead(8);
+
+  if (leituraSensor == HIGH) {
+     // Se o solo está seco
+     digitalWrite(5, HIGH);  // Liga o LED vermelho
+     digitalWrite(7, LOW);   // Desliga o LED verde
+  } else {
+     // Se o solo está úmido
+     digitalWrite(5, LOW);   // Desliga o LED vermelho
+     digitalWrite(7, HIGH);  // Liga o LED verde
+  }
+
+  // Quando o solo está seco e a leitura anterior era de solo úmido
+  if (leituraSensor && !leituraAnterior) {
+     delay(5000); // Espera 5 segundos antes de ligar a bomba
+     digitalWrite(5, LOW);   // Desliga o LED vermelho
+     digitalWrite(6, HIGH);  // Liga o LED amarelo
+
+     while (digitalRead(8)) {
+        digitalWrite(12, HIGH);   // Liga a bomba via relé
+        delay(500);               // Bomba ligada por 500ms
+        digitalWrite(12, LOW);    // Desliga a bomba
+        delay(10000);             // Espera 10 segundos antes de nova leitura
+     }
+     digitalWrite(6, LOW);  // Desliga o LED amarelo após regar
+  }
+  
+  // Atualiza o estado anterior do sensor
+  leituraAnterior = leituraSensor;
+}
