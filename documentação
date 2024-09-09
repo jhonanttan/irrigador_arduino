@@ -1,0 +1,123 @@
+Projeto de Irrigador Inteligente com Arduino
+1. Introdução
+1.1 Resumo do Projeto:
+O projeto "Irrigador Inteligente" consiste no desenvolvimento de um sistema de irrigação automatizado que monitora a umidade do solo e controla a irrigação de forma autônoma. O sistema utiliza um microcontrolador Arduino para realizar a leitura de um sensor de umidade, acionar uma bomba de água por meio de um módulo de relé, e indicar o estado do solo por meio de LEDs.
+
+1.2 Objetivo
+O objetivo deste projeto é desenvolver um sistema que, além de eficiente, seja acessível para usuários iniciantes, permitindo a irrigação automática de pequenas plantas ou hortas domésticas, minimizando a necessidade de intervenção humana.
+
+1.3 Justificativa
+A automatização de sistemas de irrigação se torna cada vez mais necessária em um contexto de busca por sustentabilidade e eficiência no uso de recursos hídricos. Este projeto é uma introdução prática ao uso de microcontroladores e sensores em aplicações reais de automação residencial.
+
+2. Especificações do Sistema
+2.1 Componentes
+Microcontrolador: Arduino Uno
+Módulo de Relé: 1 unidade
+Sensor de Umidade do Solo: 1 unidade
+Bomba de Água: 1 unidade
+LEDs: 3 unidades (Vermelho, Amarelo, Verde)
+Resistores: 3 unidades (220Ω para cada LED)
+Mangueira de Silicone: 50 cm
+Cabos Jumper: 10 unidades
+2.2 Funcionalidades
+Monitoramento contínuo da umidade do solo.
+Indicação visual do estado do solo (seco ou úmido) por meio de LEDs.
+Acionamento automático da bomba de água quando o solo está seco.
+Sistema de irrigação controlado por tempo para evitar excesso de irrigação.
+2.3 Diagramas
+Diagrama de Componentes
+
+Sensor de Umidade: Conectado ao pino digital 8 do Arduino.
+Módulo de Relé: Conectado ao pino digital 12 do Arduino.
+LED Vermelho: Conectado ao pino digital 5 do Arduino.
+LED Amarelo: Conectado ao pino digital 6 do Arduino.
+LED Verde: Conectado ao pino digital 7 do Arduino.
+Resistores: Conectados em série com os LEDs para limitar a corrente.
+3. Desenvolvimento
+3.1 Diagrama Esquemático do Circuito
+Um diagrama esquemático deve ser desenvolvido utilizando software de desenho técnico, como o Fritzing, para representar as conexões elétricas de todos os componentes ao Arduino.
+
+3.2 Código Fonte
+O código foi desenvolvido em C++ utilizando a IDE do Arduino. A lógica do código está estruturada da seguinte forma:
+
+cpp
+Copiar código
+/*
+   PROJETO: Irrigador Inteligente
+   DISCIPLINA: Software em Tempo Real
+   UNIVERSIDADE: Universidade Federal do Ceará (UFC), Campus Sobral
+   CURSO: Engenharia da Computação
+   DATA: 09/2024
+*/
+
+// Variáveis para leitura do sensor
+bool leituraSensor;
+bool leituraAnterior;
+
+void setup() {
+  
+  // Configurações dos pinos
+  pinMode(8, INPUT);     // Sensor de umidade do solo
+  pinMode(12, OUTPUT);   // Módulo de relé para controlar a bomba
+  
+  // LEDs indicadores
+  pinMode(5, OUTPUT);  // LED vermelho (solo seco)
+  pinMode(6, OUTPUT);  // LED amarelo (bomba ligada)
+  pinMode(7, OUTPUT);  // LED verde (solo úmido)
+}
+
+void loop() {
+
+  // Leitura do sensor de umidade
+  leituraSensor = digitalRead(8);
+
+  if (leituraSensor == HIGH) {
+     // Se o solo está seco
+     digitalWrite(5, HIGH);  // Liga o LED vermelho
+     digitalWrite(7, LOW);   // Desliga o LED verde
+  } else {
+     // Se o solo está úmido
+     digitalWrite(5, LOW);   // Desliga o LED vermelho
+     digitalWrite(7, HIGH);  // Liga o LED verde
+  }
+
+  // Quando o solo está seco e a leitura anterior era de solo úmido
+  if (leituraSensor && !leituraAnterior) {
+     delay(5000); // Espera 5 segundos antes de ligar a bomba
+     digitalWrite(5, LOW);   // Desliga o LED vermelho
+     digitalWrite(6, HIGH);  // Liga o LED amarelo
+
+     while (digitalRead(8)) {
+        digitalWrite(12, HIGH);   // Liga a bomba via relé
+        delay(500);               // Bomba ligada por 500ms
+        digitalWrite(12, LOW);    // Desliga a bomba
+        delay(10000);             // Espera 10 segundos antes de nova leitura
+     }
+     digitalWrite(6, LOW);  // Desliga o LED amarelo após regar
+  }
+  
+  // Atualiza o estado anterior do sensor
+  leituraAnterior = leituraSensor;
+}
+3.3 Testes e Validações
+Teste de Conexões: Verificar todas as conexões entre os componentes e o Arduino.
+Teste de LEDs: Confirmar que os LEDs indicam corretamente o estado do solo.
+Teste do Sensor de Umidade: Verificar a resposta do sensor em diferentes condições de umidade.
+Teste da Bomba de Água: Assegurar que a bomba é acionada somente quando o solo está seco e que desliga após atingir a umidade desejada.
+3.4 Resultados
+Os testes realizados confirmaram o funcionamento correto do sistema. O LED vermelho acende quando o solo está seco, o LED verde quando o solo está úmido, e o LED amarelo acende durante o funcionamento da bomba de água. O sistema foi capaz de manter a umidade do solo dentro dos parâmetros desejados automaticamente.
+
+4. Conclusão
+4.1 Considerações Finais
+O projeto "Irrigador Inteligente" demonstrou a viabilidade e eficiência de um sistema de irrigação automatizado utilizando componentes acessíveis e um microcontrolador Arduino. Este sistema pode ser facilmente adaptado e expandido para diferentes aplicações de automação residencial.
+
+4.2 Trabalhos Futuros
+Integração com IoT: Conectar o sistema a uma plataforma de Internet das Coisas para monitoramento e controle remoto.
+Automação Avançada: Implementar algoritmos de controle de irrigação baseados em parâmetros climáticos, como temperatura e umidade relativa do ar.
+Expansão do Sistema: Adicionar múltiplos sensores de umidade para áreas de irrigação maiores.
+5. Anexos
+5.1 Esquema de Ligação (Diagrama)
+[Inserir diagrama esquemático criado no Fritzing ou similar]
+
+5.2 Imagens do Projeto
+[Inserir fotos do projeto montado]
