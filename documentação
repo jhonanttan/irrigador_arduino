@@ -15,7 +15,7 @@ Microcontrolador: Arduino Uno
 Módulo de Relé: 1 unidade
 Sensor de Umidade do Solo: 1 unidade
 Bomba de Água: 1 unidade
-LEDs: 3 unidades (Vermelho, Amarelo, Verde)
+LEDs: 3 unidades (Vermelho, Azul, Verde)
 Resistores: 3 unidades (220Ω para cada LED)
 Mangueira de Silicone: 50 cm
 Cabos Jumper: 10 unidades
@@ -40,8 +40,6 @@ Um diagrama esquemático deve ser desenvolvido utilizando software de desenho t�
 3.2 Código Fonte
 O código foi desenvolvido em C++ utilizando a IDE do Arduino. A lógica do código está estruturada da seguinte forma:
 
-cpp
-Copiar código
 /*
    PROJETO: Irrigador Inteligente
    DISCIPLINA: Software em Tempo Real
@@ -62,7 +60,7 @@ void setup() {
   
   // LEDs indicadores
   pinMode(5, OUTPUT);  // LED vermelho (solo seco)
-  pinMode(6, OUTPUT);  // LED amarelo (bomba ligada)
+  pinMode(6, OUTPUT);  // LED azul (bomba ligada)
   pinMode(7, OUTPUT);  // LED verde (solo úmido)
 }
 
@@ -85,7 +83,7 @@ void loop() {
   if (leituraSensor && !leituraAnterior) {
      delay(5000); // Espera 5 segundos antes de ligar a bomba
      digitalWrite(5, LOW);   // Desliga o LED vermelho
-     digitalWrite(6, HIGH);  // Liga o LED amarelo
+     digitalWrite(6, HIGH);  // Liga o LED azul
 
      while (digitalRead(8)) {
         digitalWrite(12, HIGH);   // Liga a bomba via relé
@@ -99,6 +97,8 @@ void loop() {
   // Atualiza o estado anterior do sensor
   leituraAnterior = leituraSensor;
 }
+
+
 3.3 Testes e Validações
 Teste de Conexões: Verificar todas as conexões entre os componentes e o Arduino.
 Teste de LEDs: Confirmar que os LEDs indicam corretamente o estado do solo.
@@ -115,9 +115,3 @@ O projeto "Irrigador Inteligente" demonstrou a viabilidade e eficiência de um s
 Integração com IoT: Conectar o sistema a uma plataforma de Internet das Coisas para monitoramento e controle remoto.
 Automação Avançada: Implementar algoritmos de controle de irrigação baseados em parâmetros climáticos, como temperatura e umidade relativa do ar.
 Expansão do Sistema: Adicionar múltiplos sensores de umidade para áreas de irrigação maiores.
-5. Anexos
-5.1 Esquema de Ligação (Diagrama)
-[Inserir diagrama esquemático criado no Fritzing ou similar]
-
-5.2 Imagens do Projeto
-[Inserir fotos do projeto montado]
