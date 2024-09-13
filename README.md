@@ -85,6 +85,41 @@ void loop() {
   leituraAnterior = leituraSensor;
 }
 ```
+## ⚙️ Como Usar
+
+1. **Configuração Inicial**:
+   - **Conecte o Arduino**: Conecte o Arduino à sua máquina usando o cabo USB.
+   - **Montagem do Circuito**: Conecte todos os componentes conforme o diagrama do circuito fornecido. Certifique-se de que o sensor de umidade, os LEDs e o módulo relé estão conectados corretamente aos pinos especificados.
+
+2. **Programação**:
+   - **Instale o IDE do Arduino**: Baixe e instale o [Arduino IDE](https://www.arduino.cc/en/software) se ainda não o fez.
+   - **Carregue o Código**: Abra o Arduino IDE, copie o código fornecido na seção "Código do Projeto" e cole-o no editor do IDE.
+   - **Selecione a Placa e Porta**: Certifique-se de selecionar a placa Arduino correta e a porta serial no menu "Tools" (Ferramentas).
+   - **Envie o Código**: Clique no botão "Upload" (Carregar) para compilar e enviar o código para o Arduino.
+
+3. **Uso do Sistema**:
+   - **Teste o Sistema**: Após o código ser carregado, o Arduino começará a monitorar a umidade do solo.
+   - **Observação dos LEDs**: 
+     - O LED **vermelho** acende quando o solo está seco.
+     - O LED **verde** acende quando o solo está úmido.
+     - O LED **azul** acende quando a bomba d'água está ligada.
+
+## 🔌 Como Ligar
+
+1. **Preparação**:
+   - **Fonte de Alimentação**: Certifique-se de que o Arduino está alimentado corretamente. Você pode usar uma fonte de energia USB ou uma fonte externa compatível.
+
+2. **Ligando o Sistema**:
+   - **Conecte a Bomba d'Água**: Verifique se a bomba d'água está conectada ao módulo relé e a mangueira de silicone está posicionada corretamente.
+   - **Conecte o Sensor de Umidade**: Assegure-se de que o sensor de umidade do solo está inserido no solo onde deseja medir a umidade.
+
+3. **Ligando o Sistema**:
+   - **Energia do Arduino**: Conecte o Arduino à fonte de alimentação.
+   - **Inicie o Monitoramento**: O sistema começará a monitorar a umidade do solo automaticamente, acionando a bomba d'água quando necessário e atualizando os LEDs conforme o status do solo.
+
+4. **Monitoramento**:
+   - **Verifique o Status**: Observe os LEDs para verificar o status do solo e da bomba. Ajuste o sistema conforme necessário para garantir que a irrigação esteja funcionando conforme o esperado.
+
 
 📈 Resultados
 O sistema foi testado com sucesso em diferentes níveis de umidade do solo. A bomba d'água foi acionada corretamente quando o solo estava seco, e o feedback visual fornecido pelos LEDs foi eficaz para monitorar o status do solo e da bomba.
